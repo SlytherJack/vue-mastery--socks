@@ -33,7 +33,13 @@
 
       <div class="sub-wrapper d-flex flex-row justify-content-space-between">
         <div class="action-buttons d-flex">
-          <button v-on:click="addToCart">Add to cart</button>
+          <button
+              v-on:click="addToCart"
+              :disabled="!inStock"
+              :class="{disabledButton: !inStock}"
+          >
+            Add to cart
+          </button>
           <button v-on:click="removeFromCart" class="ml-1">Remove from cart</button>
         </div>
 
@@ -57,7 +63,7 @@ export default {
       altText: 'A pair of socks',
       image: require('./assets/img/socks-gow.jpg'),
       link: 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks',
-      inStock: true,
+      inStock: false,
       onSale: true,
       details: ['80% cotton', '20% polyester', 'Gender-neutral'],
       sizes:[
@@ -262,5 +268,11 @@ ul li {
 
 .text-align-left {
   text-align: left;
+}
+
+.disabledButton {
+  cursor: not-allowed;
+  background-color: #dedede;
+  color: black;
 }
 </style>
