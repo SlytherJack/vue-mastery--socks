@@ -4,25 +4,22 @@
       <img :src="image" :alt="altText"/>
     </div>
 
-    <div class="product-info">
-      <h1>{{ product }}</h1>
-      <p>{{ description }}</p>
-      <a :href="link" target="_blank" class="text-align-left">More products like this</a>
-
-      <div v-if="onSale">On Sale</div>
-
-      <p v-if="inStock">In Stock</p>
-      <p v-else>Out of Stock</p>
+    <div class="product-info mx-1">
+      <h1 class="text-align-left">{{ product }}</h1>
+      <p class="text-align-left">{{ description }}</p>
+      <div class="text-align-left"><a :href="link" target="_blank">More products like this</a></div>
+      <p v-if="inStock" class="text-align-left">In Stock</p>
+      <p v-else class="text-align-left">Out of Stock</p>
 
       <div class="sub-wrapper d-flex flex-col align-items-start">
-        <h4 class="text-align-left">Details</h4>
+        <h3 class="text-align-left">Details</h3>
         <ul>
           <li v-for="detail in details" :key="detail">{{ detail }}</li>
         </ul>
       </div>
 
       <div class="sub-wrapper d-flex flex-col align-items-start sizes">
-        <h4 class="text-align-left">Sizes</h4>
+        <h3 class="text-align-left">Sizes</h3>
         <ul>
           <li v-for="size in sizes" :key="size">{{ size }}</li>
         </ul>
@@ -34,14 +31,14 @@
         </div>
       </div>
 
-      <div class="sub-wrapper d-flex flex-row">
+      <div class="sub-wrapper d-flex flex-row justify-content-space-between">
         <div class="action-buttons d-flex">
           <button v-on:click="addToCart">Add to cart</button>
-          <button v-on:click="removeFromCart">Remove from cart</button>
+          <button v-on:click="removeFromCart" class="ml-1">Remove from cart</button>
         </div>
 
-        <div class="cart">
-          <p>Cart({{ cart }})</p>
+        <div class="cart d-flex justify-content-center align-items-center">
+          Cart({{ cart }})
         </div>
       </div>
     </div>
@@ -100,9 +97,9 @@ export default {
 
 <style>
 body {
-  font-family: tahoma;
+  font-family: tahoma, sans-serif;
   color:#282828;
-  margin: 0px;
+  margin: 0;
 }
 
 .nav-bar {
@@ -120,8 +117,8 @@ body {
 img {
   border: 1px solid #d8d8d8;
   width: 70%;
-  margin: 40px;
-  box-shadow: 0px .5px 1px #d8d8d8;
+  margin: 0 2.5rem;
+  box-shadow: 0 0.5px 1px #d8d8d8;
 }
 
 .product-image,
@@ -138,9 +135,6 @@ img {
 }
 
 .sub-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .color-box {
@@ -222,8 +216,51 @@ textarea {
   flex-direction: row;
 }
 
+.justify-content-start {
+  justify-content: flex-start;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-space-between {
+  justify-content: space-between;
+}
+
 .align-items-start {
   align-items: flex-start;
 }
 
+.align-items-center {
+  align-items: center;
+}
+
+.ml-1 {
+  margin-left: 1rem;
+}
+
+.my-1 {
+  margin: 1rem 0;
+}
+
+.mx-1 {
+  margin: 0 1rem;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+ul {
+  padding: 0 1rem;
+}
+
+ul li {
+  text-align: left;
+}
+
+.text-align-left {
+  text-align: left;
+}
 </style>
