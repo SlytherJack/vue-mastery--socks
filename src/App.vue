@@ -5,7 +5,7 @@
     </div>
 
     <div class="product-info mx-1">
-      <h1 class="text-align-left">{{ product }}</h1>
+      <h1 class="text-align-left">{{ title }}</h1>
       <p class="text-align-left">{{ description }}</p>
       <div class="text-align-left"><a :href="link" target="_blank">More products like this</a></div>
       <p v-if="inStock" class="text-align-left">In Stock</p>
@@ -58,30 +58,33 @@ export default {
   name: 'App',
   data() {
     return {
+      brand: 'Vue Mastery',
       product: 'Socks',
       description: 'A pair of warm, fuzzy socks',
       altText: 'A pair of socks',
       image: require('./assets/img/socks-gow.jpg'),
       link: 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks',
-      inStock: false,
-      onSale: true,
       details: ['80% cotton', '20% polyester', 'Gender-neutral'],
       sizes:[
         'S', 'M', 'L', 'XL', 'XXL', 'XXXL'
       ],
       cart: 0,
+      selectedVariant: 0,
       variants: [
         {
           variantId: 234,
           variantColour: 'green',
-          variantImage: require('./assets/img/socks-gow.jpg')
+          variantImage: require('./assets/img/socks-gow.jpg'),
+          variantQuantity: 2
         },
         {
           variantId: 235,
           variantColour: 'blue',
-          variantImage: require('./assets/img/socks-bow.jpg')
+          variantImage: require('./assets/img/socks-bow.jpg'),
+          variantQuantity: 5
         }
-      ]
+      ],
+      onSale: true
     }
   },
   methods: {
@@ -93,6 +96,14 @@ export default {
     },
     updateProduct: function(variantImage) {
       this.image = variantImage;
+    }
+  },
+  computed: {
+    title() {
+      return this.onSale ? `${this.brand} - ${this.product}` : ``;
+    },
+    inStock() {
+      return this.variants[this.selectedVariant].variantQuantity;
     }
   }
   // components: {
