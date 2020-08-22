@@ -34,15 +34,29 @@
       <div class="sub-wrapper d-flex flex-row justify-content-space-between">
         <div class="action-buttons d-flex">
           <button
-              v-on:click="addToCart"
+              @click="addToCart"
               :disabled="!inStock"
               :class="{disabledButton: !inStock}"
           >
             Add to cart
           </button>
-          <button v-on:click="removeFromCart" class="ml-1">Remove from cart</button>
+          <button @click="removeFromCart" class="ml-1">Remove from cart</button>
         </div>
       </div>
+
+      <div class="sub-wrapper">
+        <h2>Reviews</h2>
+        <p v-if="!reviews.length">There are no reviews yet.</p>
+        <ul>
+          <li v-for="review in reviews" :key="review">
+            <p>{{ review.name }}</p>
+            <p>Rating: {{ review.rating }}</p>
+            <p>{{ review.review }}</p>
+          </li>
+        </ul>
+      </div>
+
+      <product-review @review-submitted="addReview"></product-review>
     </div>
   </div>
 </template>
@@ -78,10 +92,14 @@ export default {
 					variantQuantity: 5
 				}
 			],
-			onSale: true
+      onSale: true,
+      reviews: []
 		}
 	},
 	methods: {
+    addReview(productReview) {
+      this.reviews.push(productReview)
+    },
 		addToCart: function() {
       this.$emit('add-to-cart',
       this.variants[this.selectedVariant].variantId,
@@ -102,7 +120,8 @@ export default {
 		inStock() {
 			return this.variants[this.selectedVariant].variantQuantity;
 		}
-	}
+  },
+  components : {}
 }
 </script>
 
