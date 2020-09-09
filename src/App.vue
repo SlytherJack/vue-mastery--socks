@@ -11,26 +11,26 @@
 import Product from './components/Product';
 
 export default {
-  name: 'App',
+	name: 'App',
 	data() {
 		return {
-      premium: true,
-      cart: []
-    }
-  },
-  methods: {
-    updateCart(...args) {
-      const [id, totalQuantity] = args;
-      const quanntityInCart = this.cart.filter(productID => productID === id);
+			premium: true,
+			cart: []
+		}
+	},
+	methods: {
+		updateCart(...args) {
+		const [id, totalQuantity] = args;
+		const quanntityInCart = this.cart.filter(productID => productID === id);
 
-      if (quanntityInCart.length < totalQuantity) {
-        this.cart.push(id);
-      }
-    }
-  },
-  components: {
-    Product
-  }
+		if (quanntityInCart.length < totalQuantity) {
+		this.cart.push(id);
+		}
+	}
+	},
+	components: {
+		Product
+	}
 }
 </script>
 
@@ -98,6 +98,10 @@ body {
 
 .ml-1 {
   margin-left: 1rem;
+}
+
+.m-0 {
+	margin: 0 !important;
 }
 
 .my-1 {
