@@ -48,33 +48,14 @@
 		</div>
 		</div>
 
-		<!-- Reviews -->
-		<div class='sub-wrapper reviews-section'>
-			<h2 class="text-align-left">Reviews</h2>
-			<p
-				v-if='!reviews.length'
-				class="text-align-left"
-			>
-				There are no reviews yet.
-			</p>
-
-			<!-- List of reviews -->
-			<ul v-else>
-				<li v-for='review in reviews' :key='review'>
-				<p>{{ review.name }}</p>
-				<p>Rating: {{ review.rating }}</p>
-				<p>{{ review.review }}</p>
-				</li>
-			</ul>
-		</div>
-
-		<product-review @review-submitted='addReview'></product-review>
+		<product-tabs :reviews="reviews"></product-tabs>
 	</div>
 	</div>
 </template>
 
 <script>
-	import ProductReview from './ProductReview';
+	import Vue from 'vue';
+	import ProductTabs from './ProductTabs';
 
 	export default {
 		name: 'Product',
@@ -106,7 +87,7 @@
 				},
 				],
 				onSale: true,
-				reviews: [],
+				reviews: []
 			};
 		},
 		methods: {
@@ -126,6 +107,14 @@
 			updateProduct: function(variantImage) {
 				this.image = variantImage;
 			},
+			mounted() {
+				var eventBus = new Vue();
+				eventBus.$on('review-submitted', productReview => {
+					if (this.reviews.indexOf(productReview) === -1) {
+						this.reviews.push(productReview)
+					}
+				})
+			}
 		},
 		computed: {
 		title() {
@@ -136,7 +125,7 @@
 		},
 		},
 		components: {
-			ProductReview
+			ProductTabs
 		},
 	};
 </script>
@@ -157,11 +146,6 @@ button {
 
 .reviews-section {
 	margin-top: 3rem;
-}
-
-.tab {
-  margin-left: 20px;
-  cursor: pointer;
 }
 
 .activeTab {

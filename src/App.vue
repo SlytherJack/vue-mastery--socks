@@ -65,7 +65,7 @@ body {
 }
 
 .d-flex {
-  display: flex;
+  display: flex !important;
 }
 
 .flex-col {

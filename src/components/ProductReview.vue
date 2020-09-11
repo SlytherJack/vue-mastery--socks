@@ -41,7 +41,7 @@
 			<div v-if="errors.length">
 				<b>Please correct the following error(s):</b>
 				<ul>
-					<li v-for="error in errors" :key="error">{{ error }}</li>
+					<li class="error" v-for="error in errors" :key="error">{{ error }}</li>
 				</ul>
 			</div>
 
@@ -51,6 +51,8 @@
 </template>
 
 <script>
+	import Vue from 'vue';
+
 	export default {
 		name: 'ProductReview',
 		props: [],
@@ -72,15 +74,17 @@
 						recommend: this.recommend,
 					};
 					this.$emit('review-submitted', productReview);
+					var eventBus = new Vue();
+					eventBus.$emit('review-submitted', productReview)
 					this.name = null;
 					this.review = null;
 					this.rating = null;
 					this.recommend = null;
 				} else {
-					if(!this.name) this.errors.push("Name required.");
-					if(!this.review) this.errors.push("Review required.");
-					if(!this.rating) this.errors.push("Rating required.");
-					if(!this.recommend) this.errors.push("Recommendation required.");
+					if(!this.name && this.errors.indexOf("Name required.") !== -1) this.errors.push("Name required.");
+					if(!this.review && this.errors.indexOf("Review required.") !== -1) this.errors.push("Review required.");
+					if(!this.rating && this.errors.indexOf("Rating required.") !== -1) this.errors.push("Rating required.");
+					if(!this.recommend && this.errors.indexOf("Recommendation required.") !== -1) this.errors.push("Recommendation required.");
 				}
 			}
 		},
@@ -114,6 +118,10 @@
 
 	.radio-btn label {
 		margin-top: 0.125rem;
+	}
+
+	.error {
+		color: red;
 	}
 
 	.submit-btn {
