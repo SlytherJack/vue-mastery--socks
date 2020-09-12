@@ -54,7 +54,7 @@
 </template>
 
 <script>
-	import Vue from 'vue';
+  import { EventBus } from './event-bus';
 	import ProductTabs from './ProductTabs';
 
 	export default {
@@ -91,9 +91,6 @@
 			};
 		},
 		methods: {
-			addReview(productReview) {
-				this.reviews.push(productReview);
-			},
 			addToCart: function() {
 				this.$emit(
 					'add-to-cart',
@@ -106,16 +103,15 @@
 			},
 			updateProduct: function(variantImage) {
 				this.image = variantImage;
-			},
-			mounted() {
-				var eventBus = new Vue();
-				eventBus.$on('review-submitted', productReview => {
-					if (this.reviews.indexOf(productReview) === -1) {
-						this.reviews.push(productReview)
-					}
-				})
 			}
 		},
+    mounted() {
+      EventBus.$on('review-submitted', productReview => {
+        if (this.reviews.indexOf(productReview) === -1) {
+          this.reviews.push(productReview);
+        }
+      });
+    },
 		computed: {
 		title() {
 			return this.onSale ? `${this.brand} - ${this.product}` : ``;

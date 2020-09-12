@@ -51,7 +51,7 @@
 </template>
 
 <script>
-	import Vue from 'vue';
+  import { EventBus } from './event-bus';
 
 	export default {
 		name: 'ProductReview',
@@ -61,21 +61,20 @@
 				name: '',
 				review: '',
 				rating: 0,
+        recommend: 'no',
 				errors: []
 			}
 		},
 		methods: {
 			onSubmit() {
-				if(this.name && this.review && this.rating) {
+				if(this.name.length && this.review.length && this.rating) {
 					let productReview = {
 						name: this.name,
 						review: this.review,
 						rating: this.rating,
 						recommend: this.recommend,
 					};
-					this.$emit('review-submitted', productReview);
-					var eventBus = new Vue();
-					eventBus.$emit('review-submitted', productReview)
+          EventBus.$emit('review-submitted', productReview);
 					this.name = null;
 					this.review = null;
 					this.rating = null;
